@@ -1,0 +1,36 @@
+import { describe, test, expect, vi, beforeEach, afterEach } from 'vitest';
+import { createSearchHandler } from '../src/logic/searchInput';
+import * as searchCountriesModule from '../src/logic/searchCountries';
+
+describe('search input handling (abort logic)', () => {
+  beforeEach(() => {
+    vi.useFakeTimers();
+    vi.spyOn(searchCountriesModule, 'searchCountries').mockResolvedValue([]);
+  });
+
+  afterEach(() => {
+    vi.restoreAllMocks();
+    vi.useRealTimers();
+  });
+
+  test('aborts the previous request immediately on a new input, even before debounce fires', () => {
+    const onInput = createSearchHandler();
+
+    onInput('j');
+
+    vi.advanceTimersByTime(300);
+
+    expect(searchCountriesModule.searchCountries).toHaveBeenCalledTimes(1);
+    const firstSignal = vi.mocked(searchCountriesModule.searchCountries).mock.calls[0]![1];
+    expect(firstSignal.aborted).toBe(false);
+
+    onInput('ja');
+
+    expect(firstSignal.aborted).toBe(true);
+
+    vi.advanceTimersByTime(300);
+    expect(searchCountriesModule.searchCountries).toHaveBeenCalledTimes(2);
+    const secondSignal = vi.mocked(searchCountriesModule.searchCountries).mock.calls[1]![1];
+    expect(secondSignal.aborted).toBe(false);
+  });
+});
