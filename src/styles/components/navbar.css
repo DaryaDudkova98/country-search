@@ -1,0 +1,142 @@
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24px 30px;
+  border-bottom: 1px solid var(--color-border);
+  height: auto;
+  font-size: 20px;
+  width: 100%;
+  flex-shrink: 0;
+  transition: background-color 0.25s ease, border-color 0.25s ease;
+}
+
+.navbar__logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  background-color: var(--color-border-btn);
+  padding: 6px 24px 8px 8px;
+  border-radius: 50px;
+  transform: rotate(-2deg);
+  box-shadow: 4px 4px 0px var(--color-text);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.navbar__logo:hover {
+  transform: rotate(0deg) translate(-2px, -2px);
+  box-shadow: 6px 6px 0px var(--color-text);
+}
+
+.navbar__logo-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--color-text);
+  border-radius: 50%;
+  width: 44px;
+  height: 44px;
+  flex-shrink: 0;
+}
+
+.navbar__logo-bg {
+  display: none;
+}
+
+.navbar__logo-img {
+  position: relative;
+  z-index: 1;
+  height: 28px;
+  width: auto;
+  object-fit: contain;
+  display: block;
+}
+
+.navbar__logo-text {
+  font-family: 'Wonder Glow', cursive;
+  font-size: 34px;
+  line-height: 1;
+  letter-spacing: 1px;
+  text-transform: none;
+  padding-top: 6px;
+  color: var(--color-text);
+}
+
+html.Dark .navbar__logo {
+  box-shadow: 4px 4px 0px rgba(255, 255, 255, 0.2);
+}
+
+html.Dark .navbar__logo:hover {
+  box-shadow: 6px 6px 0px rgba(255, 255, 255, 0.3);
+}
+
+html.Dark .navbar__logo-wrapper {
+  background-color: var(--color-text);
+}
+
+html.Dark .navbar__logo-text {
+  color: #2A2A2A;
+}
+
+.navbar__buttons {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.navbar__button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  color: var(--color-text);
+  background-color: transparent;
+  border: 1px solid transparent;
+  backdrop-filter: blur(0px);
+  transition:
+    color 0.3s ease,
+    background-color 0.3s ease,
+    border-color 0.3s ease,
+    backdrop-filter 0.3s ease,
+    transform 0.25s ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .navbar__button:hover {
+    color: var(--color-border-btn);
+    background-color: var(--color-fill-btn);
+    border-color: var(--color-border-btn);
+    backdrop-filter: blur(8px);
+    transform: scale(1.08);
+  }
+}
+
+.navbar__button:active {
+  transform: scale(0.96);
+  background-color: var(--color-fill-btn-hover);
+}
+
+.navbar__button:focus-visible {
+  outline: 2px solid var(--color-border-btn);
+  outline-offset: 2px;
+}
+
+.navbar__icon {
+  width: 32px;
+  height: 32px;
+  fill: currentColor;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .navbar__button,
+  .navbar__button:hover,
+  .navbar__button:active,
+  .navbar__logo,
+  .navbar__logo:hover {
+    transition: color 0.2s ease, background-color 0.2s ease;
+    transform: none;
+  }
+}
