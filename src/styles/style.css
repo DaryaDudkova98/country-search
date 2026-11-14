@@ -64,7 +64,7 @@ body.no-scroll {
 
 @font-face {
   font-family: 'Wonder Glow';
-  src: url('../fonts/wonder-glow.ttf') format('truetype');
+  src: url('/fonts/wonder-glow.ttf') format('truetype');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -72,7 +72,7 @@ body.no-scroll {
 
 @font-face {
   font-family: 'ZT Nature';
-  src: url('../fonts/zt-nature-medium.ttf') format('truetype');
+  src: url('/fonts/zt-nature-medium.ttf') format('truetype');
   font-weight: 500;
   font-style: normal;
   font-display: swap;
@@ -96,8 +96,8 @@ body::before {
   z-index: -1;
   pointer-events: none;
   background-color: var(--bg-svg-color);
-  -webkit-mask-image: url('../img/background.svg');
-          mask-image: url('../img/background.svg');
+  -webkit-mask-image: url('/img/background.svg');
+          mask-image: url('/img/background.svg');
   -webkit-mask-repeat: no-repeat;
           mask-repeat: no-repeat;
   -webkit-mask-position: center;
