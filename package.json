@@ -31,7 +31,7 @@
   "bugs": {
     "url": "https://github.com/DaryaDudkova98/country-search/issues"
   },
-  "homepage": "https://github.com/DaryaDudkova98/country-search#readme",
+  "homepage": "https://DaryaDudkova98.github.io/country-search",
   "devDependencies": {
     "@eslint/js": "^10.0.1",
     "eslint": "^10.14.0",
