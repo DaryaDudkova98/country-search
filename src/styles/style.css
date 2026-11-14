@@ -1,5 +1,7 @@
 @import './components/navbar.css';
 @import './components/search.css';
+@import './components/countryCard.css';
+@import './components/countryModal.css';
 @import './components/footer.css';
 
 :root {
@@ -51,6 +53,13 @@ html {
   scroll-behavior: smooth;
   overflow-x: hidden;
   background-color: var(--color-bg);
+}
+
+html.no-scroll,
+body.no-scroll {
+  overflow: hidden !important;
+  height: 100vh;
+  touch-action: none;
 }
 
 @font-face {
