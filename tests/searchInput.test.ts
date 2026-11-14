@@ -6,21 +6,30 @@ describe('search input handling', () => {
   beforeEach(() => {
     vi.useFakeTimers();
 
-    vi.spyOn(searchCountriesModule, 'searchCountries').mockImplementation(
-      (query, signal) => {
-        return new Promise((resolve, reject) => {
-          if (signal.aborted) {
-            return reject(signal.reason);
-          }
-          signal.addEventListener('abort', () => reject(signal.reason));
+    vi.stubGlobal('AbortSignal', {
+      ...AbortSignal,
+      timeout: (ms: number) => {
+        const ctrl = new AbortController();
+        setTimeout(
+          () => ctrl.abort(new DOMException('Timeout', 'TimeoutError')),
+          ms,
+        );
+        return ctrl.signal;
+      },
+    });
 
-        });
-      }
+    vi.spyOn(searchCountriesModule, 'searchCountries').mockImplementation(
+      (_query, signal) =>
+        new Promise((_resolve, reject) => {
+          if (signal.aborted) return reject(signal.reason);
+          signal.addEventListener('abort', () => reject(signal.reason), { once: true });
+        }),
     );
   });
 
   afterEach(() => {
     vi.restoreAllMocks();
+    vi.unstubAllGlobals();
     vi.useRealTimers();
   });
 
@@ -28,19 +37,19 @@ describe('search input handling', () => {
     const onInput = createSearchHandler();
 
     onInput('j');
-    vi.advanceTimersByTime(300);
+    await vi.advanceTimersByTimeAsync(300);
 
     expect(searchCountriesModule.searchCountries).toHaveBeenCalledTimes(1);
-    const firstSignal = vi.mocked(searchCountriesModule.searchCountries).mock.calls[0]![1];
+    const firstSignal = vi.mocked(searchCountriesModule.searchCountries).mock.calls[0]![1]!;
     expect(firstSignal.aborted).toBe(false);
 
     onInput('ja');
 
     expect(firstSignal.aborted).toBe(true);
+    expect(firstSignal.reason).toBeInstanceOf(DOMException);
+    expect((firstSignal.reason as DOMException).name).toBe('AbortError');
 
-    await vi.runAllTimersAsync();
-
-    vi.advanceTimersByTime(300);
+    await vi.advanceTimersByTimeAsync(300);
     expect(searchCountriesModule.searchCountries).toHaveBeenCalledTimes(2);
   });
 
@@ -50,16 +59,29 @@ describe('search input handling', () => {
 
     onInput('japan');
 
-    vi.advanceTimersByTime(300);
+    await vi.advanceTimersByTimeAsync(300);
     expect(searchCountriesModule.searchCountries).toHaveBeenCalledTimes(1);
 
-    vi.advanceTimersByTime(5000);
+    await vi.advanceTimersByTimeAsync(5000);
 
-    await vi.runAllTimersAsync();
+    await Promise.resolve();
 
     expect(onError).toHaveBeenCalledTimes(1);
     const error = onError.mock.calls[0]![0];
     expect(error).toBeInstanceOf(DOMException);
     expect((error as DOMException).name).toBe('TimeoutError');
+  });
+
+  test('does not call onError when aborted by new input', async () => {
+    const onError = vi.fn();
+    const onInput = createSearchHandler(() => {}, onError);
+
+    onInput('japan');
+    await vi.advanceTimersByTimeAsync(300);
+
+    onInput('japanese');
+    await vi.advanceTimersByTimeAsync(0);
+
+    expect(onError).not.toHaveBeenCalled();
   });
 });
