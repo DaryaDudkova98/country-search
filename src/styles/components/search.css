@@ -1,0 +1,168 @@
+.search-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin-top: 100px;
+  margin-bottom: 100px;
+}
+
+.sb-33 {
+  --surface: var(--color-bg);
+  --ink: var(--color-text);
+  --muted: var(--color-text-muted);
+  --acc: var(--color-border-btn);
+  --dark: rgba(138, 140, 143, 0.4);
+  --light: rgba(255, 255, 255, 0.8);
+  --lip: rgba(255, 255, 255, 0.5);
+  --ring: var(--color-border-btn);
+  width: 100%;
+  max-width: 600px;
+  display: block;
+  font-family: 'ZT Nature', system-ui, sans-serif;
+  color: var(--ink);
+}
+
+.sb-33 *,
+.sb-33 *::before,
+.sb-33 *::after {
+  box-sizing: border-box;
+}
+
+.sb-33__vh {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.sb-33__panel {
+  padding: clamp(1.1rem, 3vw, 1.6rem);
+  border-radius: 22px;
+  background: var(--surface);
+  box-shadow: -8px -8px 18px var(--light), 10px 10px 22px var(--dark);
+}
+
+.sb-33__label {
+  margin: 0 0 .8rem .25rem;
+  color: var(--muted);
+  font: 700 .74rem/1 'ZT Nature', sans-serif;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  text-shadow: 0 1px 0 rgba(255,255,255,.85);
+}
+
+.sb-33__row {
+  display: flex;
+  align-items: center;
+  gap: .75rem;
+}
+
+.sb-33__field {
+  display: flex;
+  align-items: center;
+  gap: .7rem;
+  flex: 1;
+  min-inline-size: 0;
+  min-block-size: 54px;
+  padding-inline: 1rem;
+  border-radius: 14px;
+  background: var(--surface);
+  box-shadow: inset 3px 3px 7px var(--dark), inset -3px -3px 7px var(--light), 0 1px 0 var(--lip);
+  transition: box-shadow .22s;
+}
+
+.sb-33__field:focus-within {
+  box-shadow: inset 4px 4px 9px var(--dark), inset -4px -4px 9px var(--light), 0 0 0 3px rgba(196, 227, 38, 0.3);
+}
+
+.sb-33__ico {
+  inline-size: 19px;
+  block-size: 19px;
+  flex: none;
+  color: var(--muted);
+  transition: color .2s;
+}
+
+.sb-33__field:focus-within .sb-33__ico {
+  color: var(--acc);
+}
+
+.sb-33__input {
+  flex: 1;
+  min-inline-size: 0;
+  border: 0;
+  background: none;
+  color: var(--ink);
+  font: 500 1rem/1 'ZT Nature', sans-serif;
+}
+
+.sb-33__input::placeholder {
+  color: var(--muted);
+  font-weight: 400;
+}
+
+.sb-33__input:focus {
+  outline: none;
+}
+
+.sb-33__input::-webkit-search-cancel-button {
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.sb-33__go {
+  display: grid;
+  place-items: center;
+  inline-size: 54px;
+  block-size: 54px;
+  flex: none;
+  border: 0;
+  border-radius: 14px;
+  background: var(--surface);
+  color: var(--acc);
+  cursor: pointer;
+  box-shadow: -4px -4px 9px var(--light), 5px 5px 11px var(--dark);
+  transition: box-shadow .16s, color .16s;
+}
+
+.sb-33__go:hover {
+  color: var(--color-text);
+}
+
+.sb-33__go:active {
+  box-shadow: inset 3px 3px 7px var(--dark), inset -3px -3px 7px var(--light);
+}
+
+.sb-33__go svg {
+  inline-size: 19px;
+  block-size: 19px;
+}
+
+.sb-33 :focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 3px;
+}
+
+html.Dark .sb-33 {
+  --dark: rgba(0, 0, 0, 0.6);
+  --light: rgba(255, 255, 255, 0.05);
+  --lip: rgba(255, 255, 255, 0.02);
+}
+
+html.Dark .sb-33__label {
+  text-shadow: 0 -1px 0 rgba(0,0,0,.6);
+}
+
+html.Dark .sb-33__field:focus-within {
+  box-shadow: inset 4px 4px 9px var(--dark), inset -4px -4px 9px var(--light), 0 0 0 3px rgba(196, 227, 38, 0.3);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sb-33 *, .sb-33 *::before, .sb-33 *::after {
+    transition: none !important;
+    animation: none !important;
+  }
+}
