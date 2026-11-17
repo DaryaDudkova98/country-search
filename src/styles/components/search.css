@@ -354,3 +354,23 @@ html.Dark .retry-btn:active {
     inset 3px 3px 7px rgba(0, 0, 0, 0.6),
     inset -3px -3px 7px rgba(255, 255, 255, 0.05);
 }
+
+.search-history {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 10px;
+}
+
+.history-item {
+  background: #f0f0f0;
+  border: 1px solid #ddd;
+  border-radius: 16px;
+  padding: 4px 12px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.history-item:hover {
+  background: #e0e0e0;
+}

@@ -9,6 +9,7 @@ export interface SearchUI {
   goButton: HTMLButtonElement;
   resultsContainer: HTMLElement;
   setState: (state: ResultsState, payload?: unknown) => void;
+  updateHistory: (history: string[], onSelect: (query: string) => void) => void;
 }
 
 export function createSearch(): SearchUI {
@@ -96,6 +97,11 @@ export function createSearch(): SearchUI {
   row.appendChild(goBtn);
   panel.appendChild(label);
   panel.appendChild(row);
+
+  const historyContainer = document.createElement('div');
+  historyContainer.className = 'search-history';
+  panel.appendChild(historyContainer);
+
   sbWrapper.appendChild(panel);
 
   const results = createResults(ERROR_IMAGE_BASE64);
@@ -104,11 +110,26 @@ export function createSearch(): SearchUI {
   container.appendChild(results.element);
   main.appendChild(container);
 
+  const updateHistory = (history: string[], onSelect: (query: string) => void) => {
+    historyContainer.replaceChildren();
+
+    history.forEach((query) => {
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'history-item';
+      btn.textContent = query;
+
+      btn.addEventListener('click', () => onSelect(query));
+      historyContainer.appendChild(btn);
+    });
+  };
+
   return {
     element: main,
     input,
     goButton: goBtn,
     resultsContainer: results.element,
     setState: results.setState,
+    updateHistory,
   };
 }

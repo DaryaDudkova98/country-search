@@ -10,6 +10,7 @@ import {
   type CountryCardData,
 } from './logic/mapCountryResponse';
 import { createCountryModal } from './app/components/countryModal';
+import { getSearchHistory, addSearchToHistory } from './logic/searchHistory';
 
 const app = document.getElementById('app')!;
 
@@ -30,9 +31,24 @@ const retrySearch = () => {
   }
 };
 
+const renderHistory = () => {
+  searchUI.updateHistory(getSearchHistory(), (query) => {
+    searchUI.input.value = query;
+    lastQuery = query;
+    searchUI.setState('loading');
+    handleSearch(query);
+  });
+};
+
 const handleSearch = createSearchHandler(
   (data: unknown[]) => {
     const countries = data as RawCountryResponse[];
+
+    if (lastQuery.trim().length > 0) {
+      addSearchToHistory(lastQuery);
+      renderHistory();
+    }
+
     if (countries.length === 0) {
       searchUI.setState('empty');
       return;
@@ -51,6 +67,9 @@ const handleSearch = createSearchHandler(
     });
   },
   (error) => {
+    if (error instanceof DOMException && error.name === 'AbortError') {
+      return;
+    }
     console.error(error);
     searchUI.setState('error', retrySearch);
   }
@@ -78,3 +97,5 @@ searchUI.goButton.addEventListener('click', () => {
 });
 
 app.appendChild(createFooter());
+
+renderHistory();
