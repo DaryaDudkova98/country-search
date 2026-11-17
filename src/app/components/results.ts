@@ -39,7 +39,7 @@ export function createResults(errorImageSrc: string): ResultsUI {
     const img = createStateImage();
     const errorText = document.createElement('p');
     errorText.className = 'error-box__title';
-    errorText.textContent = 'Something went wrong. Please try again.';
+    errorText.textContent = 'Failed to load data. Check your connection and try again.';
 
     const retryBtn = document.createElement('button');
     retryBtn.className = 'retry-btn';
