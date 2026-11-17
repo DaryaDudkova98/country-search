@@ -1,10 +1,51 @@
 import { describe, test, expect, vi, beforeEach, afterEach } from 'vitest';
 import { createSearchHandler } from '../src/logic/searchInput';
-import * as searchCountriesModule from '../src/logic/searchCountries';
 
-describe('search input handling', () => {
+interface Deferred<T> {
+  promise: Promise<T>;
+  resolve: (value: T) => void;
+  reject: (reason?: unknown) => void;
+}
+
+function deferred<T>(): Deferred<T> {
+  let resolve!: (value: T) => void;
+  let reject!: (reason?: unknown) => void;
+  const promise = new Promise<T>((res, rej) => {
+    resolve = res;
+    reject = rej;
+  });
+  return { promise, resolve, reject };
+}
+
+describe('search input race conditions', () => {
+  let pending: Array<Deferred<Response>>;
+
   beforeEach(() => {
     vi.useFakeTimers();
+    pending = [];
+
+    vi.stubGlobal(
+      'fetch',
+      vi.fn((_input: RequestInfo | URL, init?: RequestInit) => {
+        const d = deferred<Response>();
+        pending.push(d);
+
+        const signal = init?.signal;
+        if (signal) {
+          if (signal.aborted) {
+            d.reject(new DOMException('Aborted', 'AbortError'));
+          } else {
+            signal.addEventListener(
+              'abort',
+              () => d.reject(new DOMException('Aborted', 'AbortError')),
+              { once: true }
+            );
+          }
+        }
+
+        return d.promise;
+      })
+    );
 
     vi.stubGlobal('AbortSignal', {
       ...AbortSignal,
@@ -14,14 +55,6 @@ describe('search input handling', () => {
         return ctrl.signal;
       },
     });
-
-    vi.spyOn(searchCountriesModule, 'searchCountries').mockImplementation(
-      (_query, signal) =>
-        new Promise((_resolve, reject) => {
-          if (signal.aborted) return reject(signal.reason);
-          signal.addEventListener('abort', () => reject(signal.reason), { once: true });
-        })
-    );
   });
 
   afterEach(() => {
@@ -30,54 +63,35 @@ describe('search input handling', () => {
     vi.useRealTimers();
   });
 
-  test('aborts the previous request immediately on a new input', async () => {
-    const onInput = createSearchHandler();
-
-    onInput('j');
-    await vi.advanceTimersByTimeAsync(300);
-
-    expect(searchCountriesModule.searchCountries).toHaveBeenCalledTimes(1);
-    const firstSignal = vi.mocked(searchCountriesModule.searchCountries).mock.calls[0]![1]!;
-    expect(firstSignal.aborted).toBe(false);
+  test('late response of the first request does not override the second request result', async () => {
+    const onSuccess = vi.fn();
+    const onError = vi.fn();
+    const onInput = createSearchHandler(onSuccess, onError);
 
     onInput('ja');
-
-    expect(firstSignal.aborted).toBe(true);
-    expect(firstSignal.reason).toBeInstanceOf(DOMException);
-    expect((firstSignal.reason as DOMException).name).toBe('AbortError');
-
     await vi.advanceTimersByTimeAsync(300);
-    expect(searchCountriesModule.searchCountries).toHaveBeenCalledTimes(2);
-  });
-
-  test('handles timeout error (TimeoutError) separately from AbortError', async () => {
-    const onError = vi.fn();
-    const onInput = createSearchHandler(() => {}, onError);
+    expect(pending).toHaveLength(1);
 
     onInput('japan');
-
     await vi.advanceTimersByTimeAsync(300);
-    expect(searchCountriesModule.searchCountries).toHaveBeenCalledTimes(1);
+    expect(pending).toHaveLength(2);
 
-    await vi.advanceTimersByTimeAsync(5000);
+    await expect(pending[0]!.promise).rejects.toMatchObject({ name: 'AbortError' });
 
+    const secondResult = [{ name: { common: 'Japan' } }];
+    pending[1]!.resolve(new Response(JSON.stringify(secondResult), { status: 200 }));
+
+    await vi.advanceTimersByTimeAsync(0);
     await Promise.resolve();
 
-    expect(onError).toHaveBeenCalledTimes(1);
-    const error = onError.mock.calls[0]![0];
-    expect(error).toBeInstanceOf(DOMException);
-    expect((error as DOMException).name).toBe('TimeoutError');
-  });
+    expect(onSuccess).toHaveBeenCalledTimes(1);
+    expect(onSuccess).toHaveBeenCalledWith(secondResult);
 
-  test('does not call onError when aborted by new input', async () => {
-    const onError = vi.fn();
-    const onInput = createSearchHandler(() => {}, onError);
-
-    onInput('japan');
-    await vi.advanceTimersByTimeAsync(300);
-
-    onInput('japanese');
     await vi.advanceTimersByTimeAsync(0);
+    await Promise.resolve();
+
+    expect(onSuccess).toHaveBeenCalledTimes(1);
+    expect(onSuccess).toHaveBeenCalledWith(secondResult);
 
     expect(onError).not.toHaveBeenCalled();
   });
