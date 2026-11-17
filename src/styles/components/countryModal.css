@@ -1,0 +1,116 @@
+.modal {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    opacity 0.3s ease,
+    visibility 0.3s ease;
+  z-index: 1000;
+  backdrop-filter: blur(4px);
+}
+
+.modal.modal--open {
+  opacity: 1;
+  visibility: visible;
+}
+
+.modal__content {
+  background-color: var(--color-bg);
+  padding: 2rem;
+  border-radius: 20px;
+  max-width: 500px;
+  width: 90%;
+  position: relative;
+  box-shadow:
+    -6px -6px 14px rgba(255, 255, 255, 0.8),
+    8px 8px 16px rgba(138, 140, 143, 0.4);
+  transform: translateY(20px);
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+html.Dark .modal__content {
+  box-shadow:
+    -6px -6px 14px rgba(255, 255, 255, 0.05),
+    8px 8px 16px rgba(0, 0, 0, 0.6);
+}
+
+.modal--open .modal__content {
+  transform: translateY(0);
+}
+
+.modal__close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  font-size: 1.5rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--color-text-muted);
+  transition:
+    color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.modal__close:hover {
+  color: var(--color-border-btn);
+  transform: scale(1.1);
+}
+
+.modal__header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 24px;
+  margin-top: 8px;
+}
+
+.modal__flag {
+  width: 64px;
+  height: auto;
+  border-radius: 6px;
+  object-fit: cover;
+  box-shadow:
+    inset 2px 2px 4px rgba(138, 140, 143, 0.4),
+    inset -2px -2px 4px rgba(255, 255, 255, 0.8);
+}
+
+html.Dark .modal__flag {
+  box-shadow:
+    inset 2px 2px 4px rgba(0, 0, 0, 0.6),
+    inset -2px -2px 4px rgba(255, 255, 255, 0.05);
+}
+
+.modal__title {
+  margin: 0;
+  font-size: 1.5rem;
+  color: var(--color-text);
+  text-transform: uppercase;
+  font-weight: 700;
+  word-break: break-word;
+}
+
+.modal__info p {
+  margin-bottom: 0.6rem;
+  color: var(--color-text-muted);
+  font-size: 0.95rem;
+  line-height: 1.4;
+}
+
+.modal__info strong {
+  color: var(--color-text);
+}
+
+html.no-scroll,
+body.no-scroll {
+  overflow: hidden !important;
+  height: 100vh;
+  touch-action: none;
+}

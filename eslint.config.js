@@ -1,0 +1,30 @@
+import js from '@eslint/js';
+import globals from 'globals';
+import tseslint from 'typescript-eslint';
+import eslintConfigPrettier from 'eslint-config-prettier';
+
+export default tseslint.config(
+  {
+    ignores: ['dist/**', 'build/**', 'node_modules/**', 'coverage/**'],
+  },
+  js.configs.recommended,
+  ...tseslint.configs.recommended,
+  {
+    languageOptions: {
+      globals: { ...globals.browser, ...globals.node },
+    },
+    rules: {
+      'no-var': 'error',
+      'prefer-const': 'error',
+      'no-console': ['warn', { allow: ['warn', 'error'] }],
+      '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
+    },
+  },
+  {
+    files: ['eslint.config.js'],
+    languageOptions: {
+      globals: { ...globals.node },
+    },
+  },
+  eslintConfigPrettier
+);

@@ -1,0 +1,49 @@
+{
+  "name": "country-search",
+  "version": "1.0.0",
+  "description": "A country search application with debounce, abort logic, and timeout handling",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "lint": "eslint .",
+    "format": "prettier --write .",
+    "test": "vitest run --passWithNoTests",
+    "test:watch": "vitest",
+    "prepare": "husky",
+    "deploy": "vite build && gh-pages -d dist"
+  },
+  "lint-staged": {
+    "*.{ts,js,json,md}": [
+      "eslint --fix",
+      "prettier --write"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DaryaDudkova98/country-search.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/DaryaDudkova98/country-search/issues"
+  },
+  "homepage": "https://DaryaDudkova98.github.io/country-search",
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "eslint": "^10.14.0",
+    "eslint-config-prettier": "^10.1.8",
+    "gh-pages": "^6.3.0",
+    "globals": "^17.14.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^17.6.0",
+    "prettier": "^3.9.10",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.72.2",
+    "vite": "^8.3.6",
+    "vitest": "^5.1.0"
+  }
+}
