@@ -41,7 +41,11 @@ describe('debounce', () => {
   test('does not call fn multiple times on a series of rapid calls', () => {
     const fn = vi.fn();
     const d = debounce(fn, 300);
-    d(); d(); d(); d(); d();
+    d();
+    d();
+    d();
+    d();
+    d();
     vi.advanceTimersByTime(300);
     expect(fn).toHaveBeenCalledTimes(1);
   });
@@ -49,7 +53,9 @@ describe('debounce', () => {
   test('passes the latest arguments', () => {
     const fn = vi.fn();
     const d = debounce(fn, 300);
-    d('a'); d('b'); d('c');
+    d('a');
+    d('b');
+    d('c');
     vi.advanceTimersByTime(300);
     expect(fn).toHaveBeenCalledWith('c');
   });

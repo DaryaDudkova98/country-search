@@ -18,10 +18,7 @@ function withTimeout(signal: AbortSignal, ms: number): AbortSignal {
 
 function createManualTimeoutSignal(ms: number): AbortSignal {
   const ctrl = new AbortController();
-  setTimeout(
-    () => ctrl.abort(new DOMException('Timeout', 'TimeoutError')),
-    ms,
-  );
+  setTimeout(() => ctrl.abort(new DOMException('Timeout', 'TimeoutError')), ms);
   return ctrl.signal;
 }
 
@@ -45,7 +42,7 @@ function combineSignals(signals: AbortSignal[]): AbortSignal {
 
 export function createSearchHandler(
   onSuccess: (data: unknown[]) => void = () => {},
-  onError: (error: unknown) => void = () => {},
+  onError: (error: unknown) => void = () => {}
 ) {
   let currentController: AbortController | null = null;
 

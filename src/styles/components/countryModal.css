@@ -7,7 +7,9 @@
   align-items: center;
   opacity: 0;
   visibility: hidden;
-  transition: opacity 0.3s ease, visibility 0.3s ease;
+  transition:
+    opacity 0.3s ease,
+    visibility 0.3s ease;
   z-index: 1000;
   backdrop-filter: blur(4px);
 }
@@ -28,7 +30,9 @@
     -6px -6px 14px rgba(255, 255, 255, 0.8),
     8px 8px 16px rgba(138, 140, 143, 0.4);
   transform: translateY(20px);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
 }
 
 html.Dark .modal__content {
@@ -50,7 +54,9 @@ html.Dark .modal__content {
   border: none;
   cursor: pointer;
   color: var(--color-text-muted);
-  transition: color 0.2s ease, transform 0.2s ease;
+  transition:
+    color 0.2s ease,
+    transform 0.2s ease;
 }
 
 .modal__close:hover {

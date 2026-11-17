@@ -15,6 +15,6 @@ export function createAbortController() {
         currentController.abort();
         currentController = null;
       }
-    }
+    },
   };
 }

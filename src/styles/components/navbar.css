@@ -8,7 +8,9 @@
   font-size: 20px;
   width: 100%;
   flex-shrink: 0;
-  transition: background-color 0.25s ease, border-color 0.25s ease;
+  transition:
+    background-color 0.25s ease,
+    border-color 0.25s ease;
 }
 
 .navbar__logo {
@@ -20,7 +22,9 @@
   border-radius: 50px;
   transform: rotate(-2deg);
   box-shadow: 4px 4px 0px var(--color-text);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
 .navbar__logo:hover {
@@ -76,7 +80,7 @@ html.Dark .navbar__logo-wrapper {
 }
 
 html.Dark .navbar__logo-text {
-  color: #2A2A2A;
+  color: #2a2a2a;
 }
 
 .navbar__buttons {
@@ -136,7 +140,9 @@ html.Dark .navbar__logo-text {
   .navbar__button:active,
   .navbar__logo,
   .navbar__logo:hover {
-    transition: color 0.2s ease, background-color 0.2s ease;
+    transition:
+      color 0.2s ease,
+      background-color 0.2s ease;
     transform: none;
   }
 }

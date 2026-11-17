@@ -4,16 +4,18 @@ import { createSearch } from './app/components/search';
 import { createFooter } from './app/components/footer';
 import { createSearchHandler } from './logic/searchInput';
 import { createCountryCard } from './app/components/countryCard';
-import { mapCountryResponse, type RawCountryResponse, type CountryCardData } from './logic/mapCountryResponse';
+import {
+  mapCountryResponse,
+  type RawCountryResponse,
+  type CountryCardData,
+} from './logic/mapCountryResponse';
 import { createCountryModal } from './app/components/countryModal';
 
 const app = document.getElementById('app')!;
 
 app.appendChild(createNavbar());
 
-const countryModal = createCountryModal(() => {
-
-});
+const countryModal = createCountryModal(() => {});
 app.appendChild(countryModal.element);
 
 const searchUI = createSearch();
@@ -37,14 +39,14 @@ const handleSearch = createSearchHandler(
     }
 
     searchUI.resultsContainer.replaceChildren();
-    
+
     countries.forEach((rawCountry) => {
       const mappedCountry = mapCountryResponse(rawCountry);
 
       const card = createCountryCard(mappedCountry, (clickedCountry: CountryCardData) => {
         countryModal.open(clickedCountry);
       });
-      
+
       searchUI.resultsContainer.appendChild(card);
     });
   },
@@ -57,7 +59,7 @@ const handleSearch = createSearchHandler(
 searchUI.input.addEventListener('input', (e) => {
   const target = e.target as HTMLInputElement;
   lastQuery = target.value;
-  
+
   if (lastQuery.trim().length === 0) {
     searchUI.setState('idle');
     handleSearch('');

@@ -1,28 +1,30 @@
 .country-card {
   --dark: rgba(138, 140, 143, 0.4);
   --light: rgba(255, 255, 255, 0.8);
-  
+
   position: relative;
   display: grid;
   grid-template-columns: 1fr auto;
   grid-template-areas:
-    "title icon"
-    "content content"
-    "bar bar";
+    'title icon'
+    'content content'
+    'bar bar';
   gap: 16px;
   padding: 24px;
-  
+
   background-color: var(--color-bg);
   border-radius: 20px;
-  
+
   box-shadow:
     -6px -6px 14px var(--light),
     8px 8px 16px var(--dark);
-  
+
   font-family: 'ZT Nature', system-ui, sans-serif;
   color: var(--color-text);
   cursor: pointer;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
   border: none;
   text-align: left;
   width: 100%;
@@ -102,14 +104,16 @@ html.Dark .country-card {
 }
 
 .country-card::after {
-  content: "";
+  content: '';
   grid-area: bar;
   height: 3px;
   background-color: var(--color-border-btn);
   border-radius: 10px;
   margin-top: 8px;
   opacity: 0.6;
-  transition: opacity 0.3s ease, box-shadow 0.3s ease;
+  transition:
+    opacity 0.3s ease,
+    box-shadow 0.3s ease;
 }
 
 .country-card:hover::after {
@@ -139,7 +143,10 @@ html.Dark .error {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .country-card, .country-card::after, .country-card__name, .country-card__flag {
+  .country-card,
+  .country-card::after,
+  .country-card__name,
+  .country-card__flag {
     transition: none !important;
     animation: none !important;
     transform: none !important;

@@ -42,40 +42,50 @@
   padding: clamp(1.1rem, 3vw, 1.6rem);
   border-radius: 22px;
   background: var(--surface);
-  box-shadow: -8px -8px 18px var(--light), 10px 10px 22px var(--dark);
+  box-shadow:
+    -8px -8px 18px var(--light),
+    10px 10px 22px var(--dark);
 }
 
 .sb-33__label {
-  margin: 0 0 .8rem .25rem;
+  margin: 0 0 0.8rem 0.25rem;
   color: var(--muted);
-  font: 700 .74rem/1 'ZT Nature', sans-serif;
-  letter-spacing: .12em;
+  font:
+    700 0.74rem/1 'ZT Nature',
+    sans-serif;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
-  text-shadow: 0 1px 0 rgba(255,255,255,.85);
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.85);
 }
 
 .sb-33__row {
   display: flex;
   align-items: center;
-  gap: .75rem;
+  gap: 0.75rem;
 }
 
 .sb-33__field {
   display: flex;
   align-items: center;
-  gap: .7rem;
+  gap: 0.7rem;
   flex: 1;
   min-inline-size: 0;
   min-block-size: 54px;
   padding-inline: 1rem;
   border-radius: 14px;
   background: var(--surface);
-  box-shadow: inset 3px 3px 7px var(--dark), inset -3px -3px 7px var(--light), 0 1px 0 var(--lip);
-  transition: box-shadow .22s;
+  box-shadow:
+    inset 3px 3px 7px var(--dark),
+    inset -3px -3px 7px var(--light),
+    0 1px 0 var(--lip);
+  transition: box-shadow 0.22s;
 }
 
 .sb-33__field:focus-within {
-  box-shadow: inset 4px 4px 9px var(--dark), inset -4px -4px 9px var(--light), 0 0 0 3px rgba(196, 227, 38, 0.3);
+  box-shadow:
+    inset 4px 4px 9px var(--dark),
+    inset -4px -4px 9px var(--light),
+    0 0 0 3px rgba(196, 227, 38, 0.3);
 }
 
 .sb-33__ico {
@@ -83,7 +93,7 @@
   block-size: 19px;
   flex: none;
   color: var(--muted);
-  transition: color .2s;
+  transition: color 0.2s;
 }
 
 .sb-33__field:focus-within .sb-33__ico {
@@ -96,7 +106,9 @@
   border: 0;
   background: none;
   color: var(--ink);
-  font: 500 1rem/1 'ZT Nature', sans-serif;
+  font:
+    500 1rem/1 'ZT Nature',
+    sans-serif;
 }
 
 .sb-33__input::placeholder {
@@ -124,8 +136,12 @@
   background: var(--surface);
   color: var(--acc);
   cursor: pointer;
-  box-shadow: -4px -4px 9px var(--light), 5px 5px 11px var(--dark);
-  transition: box-shadow .16s, color .16s;
+  box-shadow:
+    -4px -4px 9px var(--light),
+    5px 5px 11px var(--dark);
+  transition:
+    box-shadow 0.16s,
+    color 0.16s;
 }
 
 .sb-33__go:hover {
@@ -133,7 +149,9 @@
 }
 
 .sb-33__go:active {
-  box-shadow: inset 3px 3px 7px var(--dark), inset -3px -3px 7px var(--light);
+  box-shadow:
+    inset 3px 3px 7px var(--dark),
+    inset -3px -3px 7px var(--light);
 }
 
 .sb-33__go svg {
@@ -153,15 +171,20 @@ html.Dark .sb-33 {
 }
 
 html.Dark .sb-33__label {
-  text-shadow: 0 -1px 0 rgba(0,0,0,.6);
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.6);
 }
 
 html.Dark .sb-33__field:focus-within {
-  box-shadow: inset 4px 4px 9px var(--dark), inset -4px -4px 9px var(--light), 0 0 0 3px rgba(196, 227, 38, 0.3);
+  box-shadow:
+    inset 4px 4px 9px var(--dark),
+    inset -4px -4px 9px var(--light),
+    0 0 0 3px rgba(196, 227, 38, 0.3);
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .sb-33 *, .sb-33 *::before, .sb-33 *::after {
+  .sb-33 *,
+  .sb-33 *::before,
+  .sb-33 *::after {
     transition: none !important;
     animation: none !important;
     transform: none !important;
@@ -215,13 +238,21 @@ html.Dark .sb-33__field:focus-within {
 }
 
 @keyframes loader-spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 @keyframes loader-spin-reverse {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(-360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(-360deg);
+  }
 }
 
 .state-image {
@@ -266,7 +297,9 @@ html.Dark .error-box {
     0 0 1px currentColor,
     0 0 1px currentColor,
     1px 1px 0px var(--color-text-muted);
-  transition: color 0.3s ease, text-shadow 0.3s ease;
+  transition:
+    color 0.3s ease,
+    text-shadow 0.3s ease;
 }
 
 .empty-state p,
@@ -291,8 +324,11 @@ html.Dark .error-box {
   box-shadow:
     -4px -4px 9px rgba(255, 255, 255, 0.8),
     5px 5px 11px rgba(138, 140, 143, 0.4);
-    
-  transition: transform 0.2s ease, box-shadow 0.2s ease, color 0.2s ease;
+
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    color 0.2s ease;
 }
 
 html.Dark .retry-btn {

@@ -10,10 +10,7 @@ describe('search input handling', () => {
       ...AbortSignal,
       timeout: (ms: number) => {
         const ctrl = new AbortController();
-        setTimeout(
-          () => ctrl.abort(new DOMException('Timeout', 'TimeoutError')),
-          ms,
-        );
+        setTimeout(() => ctrl.abort(new DOMException('Timeout', 'TimeoutError')), ms);
         return ctrl.signal;
       },
     });
@@ -23,7 +20,7 @@ describe('search input handling', () => {
         new Promise((_resolve, reject) => {
           if (signal.aborted) return reject(signal.reason);
           signal.addEventListener('abort', () => reject(signal.reason), { once: true });
-        }),
+        })
     );
   });
 

@@ -35,20 +35,20 @@ export function createSearch(): SearchUI {
   searchIcon.setAttribute('class', 'sb-33__ico');
   searchIcon.setAttribute('viewBox', '0 0 24 24');
   searchIcon.setAttribute('fill', 'none');
-  
+
   const circle = document.createElementNS(svgNS, 'circle');
   circle.setAttribute('cx', '11');
   circle.setAttribute('cy', '11');
   circle.setAttribute('r', '6.4');
   circle.setAttribute('stroke', 'currentColor');
   circle.setAttribute('stroke-width', '1.9');
-  
+
   const path = document.createElementNS(svgNS, 'path');
   path.setAttribute('d', 'm16 16 4.2 4.2');
   path.setAttribute('stroke', 'currentColor');
   path.setAttribute('stroke-width', '1.9');
   path.setAttribute('stroke-linecap', 'round');
-  
+
   searchIcon.appendChild(circle);
   searchIcon.appendChild(path);
 
@@ -76,14 +76,14 @@ export function createSearch(): SearchUI {
   const arrowIcon = document.createElementNS(svgNS, 'svg');
   arrowIcon.setAttribute('viewBox', '0 0 24 24');
   arrowIcon.setAttribute('fill', 'none');
-  
+
   const arrowPath = document.createElementNS(svgNS, 'path');
   arrowPath.setAttribute('d', 'M5 12h13m-5.5-5.5L18 12l-5.5 5.5');
   arrowPath.setAttribute('stroke', 'currentColor');
   arrowPath.setAttribute('stroke-width', '2.1');
   arrowPath.setAttribute('stroke-linecap', 'round');
   arrowPath.setAttribute('stroke-linejoin', 'round');
-  
+
   arrowIcon.appendChild(arrowPath);
   goBtn.appendChild(arrowIcon);
 
@@ -104,6 +104,6 @@ export function createSearch(): SearchUI {
     element: main,
     input: input,
     goButton: goBtn,
-    resultsContainer: resultsContainer
+    resultsContainer: resultsContainer,
   };
 }

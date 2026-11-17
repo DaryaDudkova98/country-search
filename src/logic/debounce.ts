@@ -1,6 +1,6 @@
 export function debounce<T extends (...args: never[]) => void>(
   fn: T,
-  delay: number,
+  delay: number
 ): (...args: Parameters<T>) => void {
   let timerId: ReturnType<typeof setTimeout> | undefined;
 
